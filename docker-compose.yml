@@ -1,0 +1,9 @@
+version: "3"
+services:
+  spiff-mm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spiff-mm
+    ports:
+    - "8000:80"
