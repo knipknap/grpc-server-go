@@ -38,18 +38,18 @@ func (s *server) GetValueFromDateRange(ctx context.Context, req *proto.ModelRequ
 	logger := s.suggar.With("method", "GetValueFromDateRange")
 	logger.Infow("call", "req", req)
 
-	/*/ Unpack the model-specific options
-	optionsBlob := req.GetOptions()
-	opt := proto.Options
-	if err := ptypes.UnmarshalAny(optionsBlob, &opt); err != nil {
-		logger.Fatal("could not deserialize options")
-	}*/
+	// Unpack the model-specific options
+	//optionsBlob := req.GetOptions()
+	//options := proto.Options
+	//if err := ptypes.UnmarshalAny(optionsBlob, &options); err != nil {
+	//	logger.Fatal("could not deserialize options")
+	//}
 
 	// Access other input parameters
-	options := req.GetOptions()
-	input := req.GetInput()
-	fromDate := processTime(req.GetFromDate().AsTime())
-	toDate := processTime(req.GetToDate().AsTime())
+	//options := req.GetOptions()
+	//input := req.GetInput()
+	//fromDate := processTime(req.GetFromDate().AsTime())
+	//toDate := processTime(req.GetToDate().AsTime())
 
 	// Implementation goes here
 
