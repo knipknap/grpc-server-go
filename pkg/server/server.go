@@ -6,7 +6,6 @@ import (
 
 	"grpc-server-go.localhost/proto"
 	"go.uber.org/zap"
-	//"github.com/golang/protobuf/ptypes"
 )
 
 // Server is the service that implements the grpc service interface
@@ -37,13 +36,6 @@ func (s *server) GetInfo(ctx context.Context, req *proto.ModelInfoRequest) (*pro
 func (s *server) GetValueFromDateRange(ctx context.Context, req *proto.ModelRequest) (*proto.ModelResult, error) {
 	logger := s.suggar.With("method", "GetValueFromDateRange")
 	logger.Infow("call", "req", req)
-
-	// Unpack the model-specific options
-	//optionsBlob := req.GetOptions()
-	//options := proto.Options
-	//if err := ptypes.UnmarshalAny(optionsBlob, &options); err != nil {
-	//	logger.Fatal("could not deserialize options")
-	//}
 
 	// Access other input parameters
 	//options := req.GetOptions()
