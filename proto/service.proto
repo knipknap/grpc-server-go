@@ -96,7 +96,7 @@ message ModelResult {
 
 message PaymentStream {
   string id = 1;
-  string source = 2;
+  repeated string source = 2;
   IncomeStreamType type = 3;
   repeated Payment payments = 4;
 }
