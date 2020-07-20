@@ -83,6 +83,13 @@ message ModelInput {
 }
 
 // The result definition.
+enum IncomeStreamType {
+  TAXABLE = 0;
+  PRETAXED = 1;
+  NET = 2;
+  OTHER = 3;
+}
+
 message ModelResult {
   repeated PaymentStream streams = 1;
 }
@@ -90,7 +97,7 @@ message ModelResult {
 message PaymentStream {
   string id = 1;
   string source = 2;
-  string type = 3;
+  IncomeStreamType type = 3;
   repeated Payment payments = 4;
 }
 
