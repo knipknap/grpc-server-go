@@ -1,29 +1,27 @@
-package server
+package service
 
 import (
 	"context"
 	"time"
 
-	"grpc-server-go.localhost/proto"
+	"grpc-server-go.local/proto"
 	"go.uber.org/zap"
 )
 
 // Server is the service that implements the grpc service interface
-type server struct {
-	logger *zap.Logger
-	suggar *zap.SugaredLogger
+type MicroModel struct {
+	logger *zap.SugaredLogger
 }
 
 // NewServiceServer returns an implementation of ServiceServer
-func NewServiceServer(logger *zap.Logger) proto.ServiceServer {
-	return &server{
+func New(logger *zap.SugaredLogger) proto.ServiceServer {
+	return &MicroModel{
 		logger: logger,
-		suggar: logger.Sugar(),
 	}
 }
 
-func (s *server) GetInfo(ctx context.Context, req *proto.ModelInfoRequest) (*proto.ModelInfo, error) {
-	logger := s.suggar.With("method", "GetInfo")
+func (s *MicroModel) GetInfo(ctx context.Context, req *proto.ModelInfoRequest) (*proto.ModelInfo, error) {
+	logger := s.logger.With("method", "GetInfo")
 	logger.Infow("call", "req", req)
 	return &proto.ModelInfo{
 		Name: "demo",
@@ -33,8 +31,8 @@ func (s *server) GetInfo(ctx context.Context, req *proto.ModelInfoRequest) (*pro
 	}, nil
 }
 
-func (s *server) GetValueFromDateRange(ctx context.Context, req *proto.ModelRequest) (*proto.ModelResult, error) {
-	logger := s.suggar.With("method", "GetValueFromDateRange")
+func (s *MicroModel) GetValueFromDateRange(ctx context.Context, req *proto.ModelRequest) (*proto.ModelResult, error) {
+	logger := s.logger.With("method", "GetValueFromDateRange")
 	logger.Infow("call", "req", req)
 
 	// Access other input parameters
@@ -49,8 +47,8 @@ func (s *server) GetValueFromDateRange(ctx context.Context, req *proto.ModelRequ
 	return &proto.ModelResult{Streams: input.GetStreams()}, nil
 }
 
-func (s *server) GetIncomeFromDateRange(ctx context.Context, req *proto.ModelRequest) (*proto.ModelResult, error) {
-	logger := s.suggar.With("method", "GetIncomeFromDateRange")
+func (s *MicroModel) GetIncomeFromDateRange(ctx context.Context, req *proto.ModelRequest) (*proto.ModelResult, error) {
+	logger := s.logger.With("method", "GetIncomeFromDateRange")
 	logger.Infow("call", "req", req)
 
 	// Implementation goes here. Access to parameters is the same as in GetValueFromDateRange()
