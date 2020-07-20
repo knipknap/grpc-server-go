@@ -39,13 +39,14 @@ func (s *server) GetValueFromDateRange(ctx context.Context, req *proto.ModelRequ
 
 	// Access other input parameters
 	//options := req.GetOptions()
-	//input := req.GetInput()
+	input := req.GetInput()
 	//fromDate := processTime(req.GetFromDate().AsTime())
 	//toDate := processTime(req.GetToDate().AsTime())
 
 	// Implementation goes here
+	// The default implementation just echos the input.
 
-	return &proto.ModelResult{}, nil
+	return &proto.ModelResult{Streams: input.GetStreams()}, nil
 }
 
 func (s *server) GetIncomeFromDateRange(ctx context.Context, req *proto.ModelRequest) (*proto.ModelResult, error) {
@@ -53,8 +54,10 @@ func (s *server) GetIncomeFromDateRange(ctx context.Context, req *proto.ModelReq
 	logger.Infow("call", "req", req)
 
 	// Implementation goes here. Access to parameters is the same as in GetValueFromDateRange()
+	// The default implementation just echos the input.
+	input := req.GetInput()
 
-	return &proto.ModelResult{}, nil
+	return &proto.ModelResult{Streams: input.GetStreams()}, nil
 }
 
 func processTime(t time.Time) time.Time {
