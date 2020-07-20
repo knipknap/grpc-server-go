@@ -85,7 +85,7 @@ message ModelInput {
 // The result definition.
 enum IncomeStreamType {
   TAXABLE = 0;
-  PRETAXED = 1;
+  PRETAXABLE = 1;
   NET = 2;
   OTHER = 3;
 }
