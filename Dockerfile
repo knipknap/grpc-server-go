@@ -1,6 +1,4 @@
 FROM knipknap/grpc-server-go
 WORKDIR /app
-COPY pkg pkg
 COPY proto proto
-ENV GRPC_GO_LOG_VERBOSITY_LEVEL=99
-ENV GRPC_GO_LOG_SEVERITY_LEVEL=info
+COPY main.go service/
