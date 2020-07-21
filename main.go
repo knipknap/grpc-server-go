@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"grpc-server-go.local/proto"
+	"github.com/barebaric/spiff-mm/proto"
 	"go.uber.org/zap"
 )
 
