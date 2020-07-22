@@ -32,32 +32,22 @@ service Service {
    *   output of all MicroModels. This could for example be useful when building a tax
    *   MicroModel.
    */
-  rpc GetInfo(ModelInfoRequest)
-      returns (ModelInfo) {}
+  rpc GetInfo(ModelInfoRequest) returns (ModelInfo) {}
 
   /*
    * Returns the value development of the asset over the given range.
    * The asset value can also be negative, for example for a mortgage.
    */
-  rpc GetValueFromDateRange(ModelRequest)
-      returns (ModelResult) {}
+  rpc GetValueFromDateRange(ModelRequest) returns (ModelResult) {}
 
   /*
    * Returns a list of financial transactions in the given range of days.
    * The input and output formats are the same as for the `/value/` API.
    */
-  rpc GetIncomeFromDateRange(ModelRequest)
-      returns (ModelResult) {}
+  rpc GetIncomeFromDateRange(ModelRequest) returns (ModelResult) {}
 }
 
 message ModelInfoRequest {
-}
-
-message ModelRequest {
-  Options options = 1;                     // Options are originally configured by a user
-  ModelInput input = 2;                    // Input depends on what the model subscribed to; empty for simple requests
-  google.protobuf.Timestamp from_date = 3; // The start of the subset of results to return
-  google.protobuf.Timestamp to_date = 4;   // The end of the subset of results to return
 }
 
 // The input parameter definition.
@@ -76,6 +66,13 @@ enum ReferencePeriod {
   QUARTER = 3;
   BIANNUAL = 4;
   YEAR = 5;
+}
+
+message ModelRequest {
+  Options options = 1;                     // Options are originally configured by a user
+  ModelInput input = 2;                    // Input depends on what the model subscribed to; empty for simple requests
+  google.protobuf.Timestamp from_date = 3; // The start of the subset of results to return
+  google.protobuf.Timestamp to_date = 4;   // The end of the subset of results to return
 }
 
 message ModelInput {

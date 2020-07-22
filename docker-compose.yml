@@ -6,4 +6,4 @@ services:
       dockerfile: Dockerfile
     container_name: spiff-mm
     ports:
-    - "8000:80"
+    - "8181:8181"

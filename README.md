@@ -3,6 +3,7 @@
 ## Introduction
 
 This Dockerfile implements a base type for micromodels used in the Spiff backend.
+The container will run a grpc server on port 8181.
 
 ### What is a Spiff MicroModel?
 
