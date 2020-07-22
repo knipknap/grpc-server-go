@@ -55,8 +55,9 @@ message ModelInfo {
   string name = 1;                             // Model name
   string version = 2;                          // Model version
   string hname = 3;                            // Human readable name
-  repeated string input_filter = 4;            // Will later be used to subscribe to input from other micromodels
-  ReferencePeriod input_reference_period = 5;  // Used by other microservices to determine which time range to ask for
+  repeated string dependencies = 4;            // Dependencies on other micromodels
+  repeated string input_filter = 5;            // Will later be used to subscribe to types of payments from other micromodels
+  ReferencePeriod input_reference_period = 6;  // Used by other microservices to determine which time range to ask for
 }
 
 enum ReferencePeriod {
