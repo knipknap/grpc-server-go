@@ -10,4 +10,5 @@ FROM golang:1.13-alpine
 WORKDIR /app
 COPY --from=build-env /app/server/cmd/start .
 COPY --from=build-env /app/server/cmd/service.so .
+HEALTHCHECK --interval=30s --timeout=2s --start-period=35s CMD ./grpc_health_probe -addr=:8181
 CMD ["./start"]
