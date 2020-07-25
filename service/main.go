@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/barebaric/grpc-server-go/proto"
+	"github.com/barebaric/spiff-mm/proto"
 	"go.uber.org/zap"
 )
 
@@ -14,7 +14,7 @@ type MicroModel struct {
 }
 
 // NewServiceServer returns an implementation of ServiceServer
-func New(logger *zap.SugaredLogger) proto.ServiceServer {
+func NewMicroModel(logger *zap.SugaredLogger) proto.ServiceServer {
 	return &MicroModel{
 		logger: logger,
 	}

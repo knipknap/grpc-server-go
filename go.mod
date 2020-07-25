@@ -3,7 +3,6 @@ module github.com/barebaric/spiff-mm
 go 1.14
 
 require (
-	github.com/barebaric/grpc-server-go latest
 	github.com/golang/protobuf v1.4.2
 	github.com/oklog/oklog v0.3.2
 	github.com/oklog/run v1.1.0 // indirect
@@ -15,5 +14,3 @@ require (
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/yaml.v2 v2.2.4 // indirect
 )
-
-replace github.com/barebaric/grpc-server-go => ../server
