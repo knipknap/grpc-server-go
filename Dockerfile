@@ -1,4 +1,4 @@
-FROM knipknap/grpc-server-go:latest
+FROM knipknap/grpc-server-go:latest as build-env
 WORKDIR /app
 COPY go.mod Makefile ./
 COPY proto proto
