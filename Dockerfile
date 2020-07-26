@@ -1,4 +1,4 @@
-FROM knipknap/grpc-server-go:latest as build-env
+FROM knipknap/grpc-go:latest as build-env
 WORKDIR /app
 RUN go get -x github.com/fullstorydev/grpcui && \
     go install -x github.com/fullstorydev/grpcui/cmd/grpcui

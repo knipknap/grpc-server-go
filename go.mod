@@ -1,4 +1,4 @@
-module github.com/barebaric/spiff-mm
+module github.com/knipknap/grpc-server-go
 
 go 1.14
 

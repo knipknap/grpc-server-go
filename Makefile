@@ -9,7 +9,7 @@ build: protobuf
 	go build -o start cmd/start.go
 
 docker-build:
-	docker build -t spiff-mm:latest .
+	docker build -t knipknap/grpc-server-go .
 
 docker-run:
 	docker run \
@@ -17,4 +17,4 @@ docker-run:
 		-e GRPC_PORT=8181 \
 		-e DEBUG=1 \
 		-p 8181:8181 \
-		spiff-mm:latest
+		knipknap/grpc-server-go:latest

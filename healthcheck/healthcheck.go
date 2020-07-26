@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/barebaric/spiff-mm/proto"
+	"github.com/knipknap/grpc-server-go/proto"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/status"
 	"google.golang.org/grpc/codes"

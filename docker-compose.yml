@@ -1,8 +1,0 @@
-version: "3"
-services:
-  spiff-mm-demo:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-    - "8181:8181"
