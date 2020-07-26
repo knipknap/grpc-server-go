@@ -9,13 +9,14 @@ COPY cmd cmd
 RUN make build
 
 FROM golang:1.13-alpine
-ENV GRPCUI_SERVER=localhost:8181
+ENV GRPC_PORT=:8181
+ENV GRPCUI_PORT=:8080
 WORKDIR /app
 COPY entrypoint.sh .
 COPY --from=build-env /app/start .
 COPY --from=build-env /bin/grpc_health_probe /usr/bin
 COPY --from=build-env /go/bin/grpcui /usr/bin/grpcui
-HEALTHCHECK --interval=30s --timeout=2s --start-period=20s CMD grpc_health_probe -addr=:8181
+HEALTHCHECK --interval=30s --timeout=2s --start-period=20s CMD grpc_health_probe -addr=:$GRPC_PORT
 RUN adduser -S -u 10001 user
 USER user
 CMD ["./entrypoint.sh"]

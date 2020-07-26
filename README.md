@@ -10,11 +10,11 @@ This Dockerfile implements a base container for microservices implemented in Go.
 
 The container does the following:
 
-- It runs a gRPC server on **port 8181**.
+- It runs a gRPC server.
 - **Reflection** is enabled.
 - It includes a complete [health check](https://github.com/grpc/grpc/blob/master/doc/health-checking.md) to allow for zero-downtime updates.
 - It dynamically loads the Go plugin `/app/service.so`, **which MUST be provided by the container that you build**.
-- It runs a [grpcui](https://github.com/fullstorydev/grpcui) on port 8080.
+- It runs a [grpcui](https://github.com/fullstorydev/grpcui).
 
 ## Your Dockerfile
 
@@ -37,7 +37,12 @@ FROM knipknap/grpc-server-go:latest
 COPY --from=build-env /app/service.so .
 ```
 
-# Your Go plugin
+### Supported environment variables
+
+- `GRPC_PORT`: The port of the gRPC server, by default 8181
+- `GRPCUI_PORT`: The port of the gRPC user interface, by default 8080
+
+## Your Go plugin
 
 Building your code as a Go plugin is easy:
 
