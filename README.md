@@ -12,7 +12,7 @@ The container does the following:
 
 - It runs a gRPC server on **port 8181**.
 - **Reflection** is enabled.
-- It includes a a ready-to-use [health check](https://github.com/grpc/grpc/blob/master/doc/health-checking.md) to allow for zero-downtime updates.
+- It includes a complete [health check](https://github.com/grpc/grpc/blob/master/doc/health-checking.md) to allow for zero-downtime updates.
 - It dynamically loads the Go plugin `/app/service.so`, **which MUST be provided by the container that you build**.
 - It runs a [grpcui](https://github.com/fullstorydev/grpcui) on port 8080.
 
