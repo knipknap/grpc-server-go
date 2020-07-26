@@ -16,4 +16,6 @@ COPY --from=build-env /app/start .
 COPY --from=build-env /bin/grpc_health_probe /usr/bin
 COPY --from=build-env /go/bin/grpcui /usr/bin/grpcui
 HEALTHCHECK --interval=30s --timeout=2s --start-period=20s CMD grpc_health_probe -addr=:8181
+RUN adduser -S -u 10001 user
+USER user
 CMD ["./entrypoint.sh"]

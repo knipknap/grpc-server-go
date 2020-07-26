@@ -3,11 +3,13 @@
 ## Introduction
 
 This Dockerfile implements a base container for MicroModels used in the Spiff backend.
-The container will run a grpc server on port 8181. The server dynamically loads a
-service from a service plugin.
+The container does the following things:
 
-The container also comes with a ready-to-use health check included, allowing for
-zero-downtime updates.
+- It runs a grpc server on port 8181.
+- It includes a a ready-to-use health check to allow for zero-downtime updates.
+- It dynamically loads the Go plugin /app/service.so, which must be provided be the container that is built on top.
+- It runs a [grpcui](https://github.com/fullstorydev/grpcui) on port 8080.
+
 
 ## How to get started.
 
