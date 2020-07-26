@@ -2,8 +2,26 @@
 
 ## Introduction
 
-This Dockerfile can be used as a template for micromodels used in the Spiff backend.
-The container will run a grpc server on port 8181.
+This Dockerfile implements a base container for MicroModels used in the Spiff backend.
+The container will run a grpc server on port 8181. The server dynamically loads a
+service from a service plugin.
+
+The container also comes with a ready-to-use health check included, allowing for
+zero-downtime updates.
+
+## How to get started.
+
+I recommend that you clone the following repo as a starting point:
+
+https://github.com/barebaric/spiff-mm-demo.git
+
+It includes a ready to use Docker file, and everything you need to build
+a MicroModel.
+
+You can then define your MicroModel options in proto/options.proto, and
+implement your service in service/service.go.
+
+## General MicroModel information
 
 ### What is a Spiff MicroModel?
 
