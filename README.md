@@ -43,7 +43,7 @@ Building your code as a Go plugin is easy:
 
 - Make sure that your package is named "main" (this is a Go requirement)
 - Compile using `go build -buildmode=plugin -o service.so service.go` (as shown in the Dockerfile above)
-- Make sure that your main package includes a function with the following signature:
+- Make sure that your main package includes a RegisterService function with the following signature:
 
 ```go
 package main
