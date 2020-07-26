@@ -7,8 +7,6 @@ import (
 
 	"github.com/barebaric/spiff-mm/proto"
 	"go.uber.org/zap"
-	"google.golang.org/grpc/status"
-	"google.golang.org/grpc/codes"
 )
 
 // Server is the service that implements the grpc service interface
@@ -64,23 +62,6 @@ func (s *MicroModel) GetIncomeFromDateRange(ctx context.Context, req *proto.Mode
 	input := req.GetInput()
 
 	return &proto.ModelResult{Streams: input.GetStreams()}, nil
-}
-
-func (s *MicroModel) Check(ctx context.Context, in *proto.HealthCheckRequest) (*proto.HealthCheckResponse, error) {
-	s.statusMapMutex.Lock()
-	defer s.statusMapMutex.Unlock()
-	if in.Service == "" {
-		// check the server overall health status.
-		return &proto.HealthCheckResponse{
-			Status: proto.HealthCheckResponse_SERVING,
-		}, nil
-	}
-	if status, ok := s.statusMap[in.Service]; ok {
-		return &proto.HealthCheckResponse{
-			Status: status,
-		}, nil
-	}
-	return nil, status.Error(codes.NotFound, "unknown service")
 }
 
 func processTime(t time.Time) time.Time {
