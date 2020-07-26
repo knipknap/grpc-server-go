@@ -2,7 +2,7 @@
 
 ## Introduction
 
-grpc-server-go provides a production-ready gRPC server in a **Docker** container.
+grpc-server-go provides a production-ready gRPC server for Golang in a **Docker** container.
 
 <img src="./assets/grpc-logo.svg" width="300px" align="right">
 
