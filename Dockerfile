@@ -11,5 +11,5 @@ WORKDIR /app
 COPY --from=build-env /app/server/cmd/start .
 COPY --from=build-env /app/server/cmd/service.so .
 COPY --from=build-env /bin/grpc_health_probe /bin
-#HEALTHCHECK --interval=30s --timeout=2s --start-period=35s CMD grpc_health_probe -addr=:8181
+HEALTHCHECK --interval=30s --timeout=2s --start-period=20s CMD grpc_health_probe -addr=:8181
 CMD ["./start"]
