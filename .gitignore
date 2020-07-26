@@ -1,3 +1,2 @@
-*.sum
 proto/*.go
 cmd/start
