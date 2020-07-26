@@ -10,8 +10,8 @@ import (
 	"plugin"
 	"path/filepath"
 
-	"github.com/barebaric/spiff-mm/proto"
-	"github.com/barebaric/spiff-mm/healthcheck"
+	proto "github.com/barebaric/spiff-mm/proto"
+	healthcheck "github.com/barebaric/spiff-mm/healthcheck"
 	"github.com/oklog/oklog/pkg/group"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
