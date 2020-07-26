@@ -1,8 +1,13 @@
-# gRPC server for Go
+# grpc-server-go
 
 ## Introduction
 
+grpc-server-go provides a production-ready gRPC server in a **Docker** container.
+
+<img src="./assets/grpc-logo.svg" width="300px" align="right">
+
 This Dockerfile implements a base container for microservices implemented in Go.
+
 The container does the following:
 
 - It runs a gRPC server on **port 8181**.
@@ -13,8 +18,12 @@ The container does the following:
 
 ## Your Dockerfile
 
-A typical Dockerfile could look like this: Two stages to allow for compilation of your Go code,
-while still producing a light weight production-ready container.
+A typical grpc-server-go Dockerfile will contain two stages:
+
+- The first stage is based on [grpc-go](https://github.com/knipknap/grpc-go) to provide an environment for compiling your Go code
+- The second stage produces a light weight production-ready container with a gRPC server.
+
+Example:
 
 ```
 FROM knipknap/grpc-go:latest as build-env
@@ -32,7 +41,7 @@ COPY --from=build-env /app/service.so .
 
 Building your code as a Go plugin is easy:
 
-- Make sure that your package is named "main"
+- Make sure that your package is named "main" (this is a Go requirement)
 - Compile using `go build -buildmode=plugin -o service.so service.go` (as shown in the Dockerfile above)
 - Make sure that your main package includes a function with the following signature:
 
