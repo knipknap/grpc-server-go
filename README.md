@@ -7,7 +7,7 @@ The container does the following things:
 
 - It runs a grpc server on port 8181.
 - It includes a a ready-to-use health check to allow for zero-downtime updates.
-- It dynamically loads the Go plugin /app/service.so, which must be provided be the container that is built on top.
+- It dynamically loads the Go plugin /app/service.so, which must be provided by the container that you build.
 - It runs a [grpcui](https://github.com/fullstorydev/grpcui) on port 8080.
 
 
