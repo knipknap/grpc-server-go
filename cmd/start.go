@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 
 	"github.com/barebaric/spiff-mm/proto"
-	"github.com/barebaric/spiff-mm/server/healthcheck"
+	"github.com/barebaric/spiff-mm/healthcheck"
 	"github.com/oklog/oklog/pkg/group"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
@@ -50,11 +50,11 @@ func main() {
 	if err != nil {
 		sugar.Panicw("Failed to load service plugin", plugin_filename, err)
 	}
-	NewMicroModelSymbol, err := service.Lookup("NewMicroModel")
+	RegisterServiceSymbol, err := service.Lookup("RegisterService")
 	if err != nil {
-		sugar.Panicw("Service plugin is missing 'NewMicroModel' method", err)
+		sugar.Panicw("Service plugin is missing 'RegisterService' method", err)
 	}
-	NewMicroModel := NewMicroModelSymbol.(func(logger *zap.SugaredLogger) proto.ServiceServer)
+	RegisterService := RegisterServiceSymbol.(func(server *grpc.Server, logger *zap.SugaredLogger))
 
 	// clearly demarcates the scope in which each listener/socket may be used.
 	var g group.Group
@@ -70,7 +70,7 @@ func main() {
 
 			var opts []grpc.ServerOption
 			grpcServer := grpc.NewServer(opts...)
-			proto.RegisterServiceServer(grpcServer, NewMicroModel(sugar))
+			RegisterService(grpcServer, sugar)   // Let the plugin register itself
 			proto.RegisterHealthServer(grpcServer, healthcheck.NewHealthCheck(sugar))
 			reflection.Register(grpcServer)
 			sugar.Infow("starting server")

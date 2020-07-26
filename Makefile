@@ -6,8 +6,7 @@ protobuf:
 
 build: protobuf
 	go mod download
-	go build -o server/cmd/start server/cmd/start.go
-	go build -buildmode=plugin -o server/cmd/service.so service/main.go
+	go build -o cmd/start cmd/start.go
 
 docker-build:
 	docker build -t spiff-mm:latest .

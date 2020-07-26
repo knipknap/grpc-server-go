@@ -1,4 +1,3 @@
 *.sum
 proto/*.go
-server/cmd/start
-server/cmd/*.so
+cmd/start
