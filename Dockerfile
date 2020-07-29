@@ -9,8 +9,8 @@ COPY cmd cmd
 RUN make build
 
 FROM golang:1.13-alpine
-ENV GRPC_PORT=:8181
-ENV GRPCUI_PORT=:8080
+ENV GRPC_PORT=8181
+ENV GRPCUI_PORT=8080
 WORKDIR /app
 COPY entrypoint.sh .
 COPY --from=build-env /app/start .
