@@ -13,8 +13,9 @@ docker-build:
 
 docker-run:
 	docker run \
-		-e GRPC_HOST=0.0.0.0 \
 		-e GRPC_PORT=8181 \
+		-e GRPCUI_PORT=8080 \
 		-e DEBUG=1 \
+		-p 8080:8080 \
 		-p 8181:8181 \
 		knipknap/grpc-server-go:latest
