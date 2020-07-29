@@ -5,8 +5,6 @@ on:
     branches:
       - master
   create:
-    tags:
-      - '*'
   release:
     types: [created]
 
