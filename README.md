@@ -41,6 +41,7 @@ COPY --from=build-env /app/service.so .
 
 - `GRPC_PORT`: The port of the gRPC server, by default 8181
 - `GRPCUI_PORT`: The port of the gRPC user interface, by default 8080
+- `DEBUG`: To change the zap logger from Production to Development
 
 ## Your Go plugin
 
