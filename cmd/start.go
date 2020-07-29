@@ -10,6 +10,7 @@ import (
 	"plugin"
 	"path/filepath"
 
+	config "github.com/knipknap/grpc-server-go/config"
 	proto "github.com/knipknap/grpc-server-go/proto"
 	healthcheck "github.com/knipknap/grpc-server-go/healthcheck"
 	"github.com/oklog/oklog/pkg/group"
@@ -32,7 +33,10 @@ func init() {
 
 func main() {
 	// Set up logging.
-	logger, _ := zap.NewDevelopment()
+	logger, _ := zap.NewProduction()
+	if config.Data.Debug {
+		logger, _ = zap.NewDevelopment()
+	}
 	defer logger.Sync() // flushes buffer, if any
 	sugar := logger.Sugar()
 	flag.Parse()

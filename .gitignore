@@ -1,2 +1,2 @@
 proto/*.go
-cmd/start
+start
