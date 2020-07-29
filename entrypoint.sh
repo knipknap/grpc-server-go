@@ -1,4 +1,5 @@
 #!/bin/sh
+set -x
 
 ./start -port ${GRPC_PORT:-8181} &
 sleep 2
