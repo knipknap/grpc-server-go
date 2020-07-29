@@ -2,6 +2,9 @@ name: Deploy to production swarm
 
 on:
   push:
+    branches:
+      - master
+  create:
     tags:
       - '*'
   release:
