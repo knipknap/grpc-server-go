@@ -11,10 +11,11 @@ This Dockerfile implements a base container for microservices implemented in Go.
 The container does the following:
 
 - It runs a gRPC server.
+- It dynamically loads the Go plugin `/app/service.so`, **which MUST be provided by the container that you build**.
 - **Reflection** is enabled.
 - It includes a complete [health check](https://github.com/grpc/grpc/blob/master/doc/health-checking.md) to allow for zero-downtime updates.
-- It dynamically loads the Go plugin `/app/service.so`, **which MUST be provided by the container that you build**.
 - It runs a [grpcui](https://github.com/fullstorydev/grpcui).
+- It picks up additional JSON-based health checks and runs them, validating if the RPC call generates the expected result. More below.
 
 ## Your Dockerfile
 
@@ -75,3 +76,39 @@ func NewYourService(logger *zap.SugaredLogger) proto.ServiceServer {
 	}
 }
 ```
+
+## JSON based health checks
+
+In addition to implementing the standard [health check](https://github.com/grpc/grpc/blob/master/doc/health-checking.md)
+protocol, this container also provide a simple mechanism for more powerful health checks
+based on [grpcurl](https://github.com/fullstorydev/grpcurl).
+
+The container will execute the gRPC calls every time when Docker requests a status from the
+healthcheck.
+
+To use this mechanism, simply put JSON files under `/app/healthchecks/`, with the following
+structure:
+
+```
+healthchecks/
+├── check1
+│   └── my.host.Service
+│       └── MyMethod
+│           ├── input.json
+│           └── output.json
+└── check2
+    └── my.host.Service2
+        ├── MyMethod1
+        │    ├── input.json
+        │    └── output.json
+        └── MySuperMethod
+             ├── input.json
+             └── output.json
+```
+
+In this example, the healthcheck would call my.host.Service/MyMethod, passing the input
+from input.json as parameters. The return value has to match the contents output.json
+exactly, otherwise the check is considered failed.
+
+my.host.Service2/MyMethod1 and MySuperMethod are both called and checked in the same
+manner.

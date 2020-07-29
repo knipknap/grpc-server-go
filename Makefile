@@ -16,6 +16,6 @@ docker-run:
 		-e GRPC_PORT=8181 \
 		-e GRPCUI_PORT=8080 \
 		-e DEBUG=1 \
-		-p 8080:8080 \
-		-p 8181:8181 \
+		-p 18080:8080 \
+		-p 18181:8181 \
 		knipknap/grpc-server-go:latest
