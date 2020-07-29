@@ -2,7 +2,7 @@ FROM knipknap/grpc-go:latest as build-env
 WORKDIR /app
 RUN go get -x github.com/fullstorydev/grpcui && \
     go install -x github.com/fullstorydev/grpcui/cmd/grpcui
-COPY go.mod go.map Makefile ./
+COPY go.mod go.sum Makefile ./
 COPY config config
 COPY proto proto
 COPY healthcheck healthcheck
