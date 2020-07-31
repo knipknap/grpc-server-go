@@ -6,7 +6,7 @@ protobuf:
 
 build: protobuf
 	go mod download
-	go build -o start cmd/start.go
+	go build -trimpath -o start cmd/start.go
 
 docker-build:
 	docker build -t knipknap/grpc-server-go .

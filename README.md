@@ -32,7 +32,7 @@ WORKDIR /app
 COPY go.mod Makefile ./
 COPY proto proto
 COPY service service
-RUN go build -buildmode=plugin -o service.so service.go
+RUN go build -trimpath -buildmode=plugin -o service.so service.go
 
 FROM knipknap/grpc-server-go:latest
 COPY --from=build-env /app/service.so .
@@ -49,7 +49,7 @@ COPY --from=build-env /app/service.so .
 Building your code as a Go plugin is easy:
 
 - Make sure that your package is named "main" (this is a Go requirement)
-- Compile using `go build -buildmode=plugin -o service.so service.go` (as shown in the Dockerfile above)
+- Compile using `go build -trimpath -buildmode=plugin -o service.so service.go` (as shown in the Dockerfile above)
 - Make sure that your main package includes a RegisterService function with the following signature:
 
 ```go
