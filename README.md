@@ -10,8 +10,7 @@ This Dockerfile implements a base container for microservices implemented in Go.
 
 The container does the following:
 
-- It runs a gRPC server.
-- It dynamically loads the Go plugin `/app/service.so`, **which MUST be provided by the container that you build**.
+- It includes a main.go for a gRPC server that imports server/main.go for your code.
 - **Reflection** is enabled.
 - It includes a complete [health check](https://github.com/grpc/grpc/blob/master/doc/health-checking.md) to allow for zero-downtime updates.
 - It runs a [grpcui](https://github.com/fullstorydev/grpcui).
@@ -21,21 +20,36 @@ The container does the following:
 
 A typical grpc-server-go Dockerfile will contain two stages:
 
-- The first stage is based on [grpc-go](https://github.com/knipknap/grpc-go) to provide an environment for compiling your Go code
+- The first stage is based on [grpc-server-go](https://github.com/knipknap/grpc-go) to provide
+  an environment for compiling your Go code; this environment contains the grpc server as cmd/main.go
 - The second stage produces a light weight production-ready container with a gRPC server.
 
 Example:
 
 ```
-FROM knipknap/grpc-go:latest as build-env
+FROM knipknap/grpc-server-go:latest as build-env
 WORKDIR /app
-COPY go.mod Makefile ./
-COPY proto proto
-COPY service service
-RUN go build -trimpath -buildmode=plugin -o service.so service.go
+COPY proto/service.proto proto/
+COPY proto/options.proto proto/
+COPY service/main.go service/
+RUN make build
 
-FROM knipknap/grpc-server-go:latest
-COPY --from=build-env /app/service.so .
+FROM golang:1.13-alpine
+
+# Make sure to include all these COPY commands, they are required.
+COPY --from=build-env /app/start /app/entrypoint.sh /app/healthcheck.sh ./
+COPY --from=build-env /app/healthchecks /app/
+COPY --from=build-env /bin/grpc_health_probe /bin
+COPY --from=build-env /go/bin/grpcui /usr/local/bin/grpcui
+COPY --from=build-env /go/bin/grpcurl /usr/local/bin/grpcurl
+COPY --from=build-env /usr/bin/find /usr/bin
+
+RUN adduser -S -u 10001 user
+USER user
+ENV GRPC_PORT=8181
+ENV GRPCUI_PORT=8080
+HEALTHCHECK --interval=30s --timeout=2s --start-period=20s CMD ./healthcheck.sh -addr=:$GRPC_PORT
+CMD ["./entrypoint.sh"]
 ```
 
 ### Supported environment variables
@@ -46,10 +60,11 @@ COPY --from=build-env /app/service.so .
 
 ## Your Go plugin
 
-Building your code as a Go plugin is easy:
+Add your code as follows:
 
-- Make sure that your package is named "main" (this is a Go requirement)
-- Compile using `go build -trimpath -buildmode=plugin -o service.so service.go` (as shown in the Dockerfile above)
+- Make sure that your container adds a `/app/service/main.go`. The package could be named "service"
+- Place your .proto files in the `/app/proto/` folder. The container includes a Makefile that will
+  compile them during the build stage (see "make build" in the example above)
 - Make sure that your main package includes a RegisterService function with the following signature:
 
 ```go

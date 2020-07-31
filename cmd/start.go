@@ -7,12 +7,11 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"plugin"
-	"path/filepath"
 
 	config "github.com/knipknap/grpc-server-go/config"
 	proto "github.com/knipknap/grpc-server-go/proto"
 	healthcheck "github.com/knipknap/grpc-server-go/healthcheck"
+	service "github.com/knipknap/grpc-server-go/service"
 	"github.com/oklog/oklog/pkg/group"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
@@ -41,25 +40,6 @@ func main() {
 	sugar := logger.Sugar()
 	flag.Parse()
 
-	// Find directory of this file
-	ex, err := os.Executable()
-	if err != nil {
-		panic(err)
-	}
-	exPath := filepath.Dir(ex)
-
-	// Load the service as a plugin
-	plugin_filename := filepath.Join(exPath, "service.so")
-	service, err := plugin.Open(plugin_filename)
-	if err != nil {
-		sugar.Panicw("Failed to load service plugin", plugin_filename, err)
-	}
-	RegisterServiceSymbol, err := service.Lookup("RegisterService")
-	if err != nil {
-		sugar.Panicw("Service plugin is missing 'RegisterService' method", err)
-	}
-	RegisterService := RegisterServiceSymbol.(func(server *grpc.Server, logger *zap.SugaredLogger))
-
 	// clearly demarcates the scope in which each listener/socket may be used.
 	var g group.Group
 	{
@@ -74,7 +54,7 @@ func main() {
 
 			var opts []grpc.ServerOption
 			grpcServer := grpc.NewServer(opts...)
-			RegisterService(grpcServer, sugar)   // Let the plugin register itself
+			service.RegisterService(grpcServer, sugar)   // Let the plugin register itself
 			proto.RegisterHealthServer(grpcServer, healthcheck.NewHealthCheck(sugar))
 			reflection.Register(grpcServer)
 			sugar.Infow("starting server")

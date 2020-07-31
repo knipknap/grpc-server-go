@@ -1,0 +1,13 @@
+/**
+ * This file defines the API that is shared by all MicroModels.
+ * Do not make any changes that are specific to your micromodel here; instead,
+ * add specific options in options.proto.
+ */
+syntax = "proto3";
+
+package proto;
+option go_package = ".;proto";
+
+// The Main service definition.
+service Service {
+}
