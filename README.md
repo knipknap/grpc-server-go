@@ -10,8 +10,8 @@ This Dockerfile implements a base container for microservices implemented in Go.
 
 The container does the following:
 
-- It includes a main.go for a gRPC server that imports server/main.go for your code.
-- **Reflection** is enabled.
+- It includes a main.go for a gRPC server that imports any code that you put into `service/main.go`.
+- **Reflection** is enabled in the resulting gRPC service.
 - It includes a complete [health check](https://github.com/grpc/grpc/blob/master/doc/health-checking.md) to allow for zero-downtime updates.
 - It runs a [grpcui](https://github.com/fullstorydev/grpcui).
 - It picks up additional JSON-based health checks and runs them, validating if the RPC call generates the expected result. More below.
@@ -21,7 +21,7 @@ The container does the following:
 A typical grpc-server-go Dockerfile will contain two stages:
 
 - The first stage is based on [grpc-server-go](https://github.com/knipknap/grpc-go) to provide
-  an environment for compiling your Go code; this environment contains the grpc server as cmd/main.go
+  an environment for compiling your Go code; this environment contains the grpc server as `cmd/main.go`
 - The second stage produces a light weight production-ready container with a gRPC server.
 
 Example:
